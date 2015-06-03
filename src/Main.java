@@ -31,5 +31,8 @@ public class Main {
 
         alarm = new FindNextAlarm(22, 35);
         System.out.println("9)Время будильника: " + alarm.getSoonAlarm());
+
+        long time = alarm.convertTimeInMillis(0);
+        System.out.println("10)Время в миллисекундах: " + time);
     }
 }

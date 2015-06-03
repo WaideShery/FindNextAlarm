@@ -1,9 +1,25 @@
 import java.util.Calendar;
+
 /**
  * Created by Waide Shery on 11.05.15.
  */
 
 public class FindNextAlarm {
+    /*
+     * Класс перечисления, в котором указывается формат даты
+     * Вначале каждой переменной указан разделительный знак в дате: 'slash' - слэш, 'dash' - тире, 'point' - точка
+     * 'M' - месяц в цифровом формате; допустимы форматы вида '05' или '5'.
+     * 'D' - день в цифровом формате; допустимы форматы вида '09' или '9'.
+     * 'YYYY' - 4-символьное обозначение года, например, 2017.
+     *  only_Time - указывается только время, будильник устанавливается на каждый день
+     */
+    public enum LegalDateFormat {
+        slash_M_D_YYYY, slash_D_M_YYYY, slash_YYYY_M_D,
+        dash_M_D_YYYY, dash_D_M_YYYY, dash_YYYY_M_D,
+        point_M_D_YYYY, point_D_M_YYYY, point_YYYY_M_D,
+        only_Time, days_Of_The_Week
+    }
+
     LegalDateFormat format; //переменная внутреннего класса перечислений LegalDateFormat
     /*
     Массив отражает срабатывание будильника в определенные дни недели. Отсчет ведется с понедельника.
@@ -106,6 +122,17 @@ public class FindNextAlarm {
     public long getSoonAlarm(int index) {
         parseTime(index);
         return getDateTime();
+    }
+
+    /**
+     * Метод для перевода времени из формата часы-минуты в формат милисекунд.
+     *
+     * @param index поряфдковый номер значения времени. Отсчет с 0.
+     * @return время в милисекундах.
+     */
+    public int convertTimeInMillis(int index){
+        parseTime(index);
+        return (hoursSchedule*60 + minutesSchedule) * 60 * 1000;
     }
 
     /**
@@ -464,21 +491,6 @@ public class FindNextAlarm {
         if (week.contains("sun")) {
             daysOfWeek[6] = true;
         }
-    }
-
-    /*
-     * Класс перечисления, в котором указывается формат даты
-     * Вначале каждой переменной указан разделительный знак в дате: 'slash' - слэш, 'dash' - тире, 'point' - точка
-     * 'M' - месяц в цифровом формате; допустимы форматы вида '05' или '5'.
-     * 'D' - день в цифровом формате; допустимы форматы вида '09' или '9'.
-     * 'YYYY' - 4-символьное обозначение года, например, 2017.
-     *  only_Time - указывается только время, будильник устанавливается на каждый день
-     */
-    public enum LegalDateFormat {
-        slash_M_D_YYYY, slash_D_M_YYYY, slash_YYYY_M_D,
-        dash_M_D_YYYY, dash_D_M_YYYY, dash_YYYY_M_D,
-        point_M_D_YYYY, point_D_M_YYYY, point_YYYY_M_D,
-        only_Time, days_Of_The_Week
     }
 
 }
